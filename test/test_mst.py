@@ -25,7 +25,8 @@ def check_mst(adj_mat: np.ndarray,
     always connected? What else can you think of?
 
     """
-
+    def approx_equal(a, b):
+        return abs(a - b) < allowed_error
 
     # check the number of edges, which should be one less than the number of vvertices
 
@@ -41,10 +42,6 @@ def check_mst(adj_mat: np.ndarray,
             if mst[i, j] > 0:
                 assert approx_equal(mst[i, j], adj_mat[i, j]), 'MST contains an edge not in the original graph or with incorrect weight'
 
-
-
-    def approx_equal(a, b):
-        return abs(a - b) < allowed_error
 
     total = 0
     for i in range(mst.shape[0]):
