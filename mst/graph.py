@@ -80,18 +80,19 @@ class Graph:
 
             in_mst[to_vertex] = True
 
-            # add the edge to the list of chosen edges (if not starting vertex)
+            # add the edge to the list of chosen edges (if not the starting vertex)
 
             if from_vertex >= 0:
                 edges_selected.append((from_vertex, to_vertex))
 
-            # update the heap with the new edge costs to vertices not in MST
+            # update the heap with the new edge costs to vertices not in the mst
                 
             for next_vertex, edge_weight in enumerate(self.adj_mat[to_vertex]):
                 if not in_mst[next_vertex] and edge_weight > 0:
                     heapq.heappush(edge_costs, (edge_weight, to_vertex, next_vertex))
 
         # build the mst from the chosen edges
+                    
         for from_vertex, to_vertex in edges_selected:
             weight = self.adj_mat[from_vertex][to_vertex]
             self.mst[from_vertex][to_vertex] = weight
