@@ -34,7 +34,7 @@ def check_mst(adj_mat: np.ndarray,
     num_edges = np.count_nonzero(mst) // 2  # Each edge is counted twice
     assert num_edges == num_vertices - 1, 'Proposed MST does not have the correct number of edges'
 
-   # check weight, which should be half the sum of mst
+   # check the  weight, which should be half the sum of mst
                 
     total = np.sum(mst) / 2
     assert approx_equal(total, expected_weight), 'Proposed MST has incorrect expected weight'
