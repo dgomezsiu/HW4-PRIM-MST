@@ -42,39 +42,61 @@ class Graph:
 
         """
 
-        # initialize MST,number of vertices, and tracking array
+
+        # initialize mst, and track both vertices and edges selected for ,st
 
         num_vertices = self.adj_mat.shape[0]
         self.mst = np.zeros_like(self.adj_mat)
         in_mst = [False] * num_vertices
 
-        # initialize priority queue for edges (weight, vertex1, vertex2)
+        # edges selected for mst (weight, from_vertex, to_vertex)
 
-        edges = [(0, 0, i) for i in range(1, num_vertices)]
-        heapq.heapify(edges)
-        num_edges = 0
+        edges_selected = []
 
-        # while not all vertices are included in the MST, work through the queue
+        # initialize all vertices not in MST with infinite edge cost except for the first one
 
-        while edges and num_edges < num_vertices - 1:
-            weight, start_vertex, end_vertex = heapq.heappop(edges)
+        edge_costs = [(np.inf, 0, i) for i in range(1, num_vertices)]
 
-            # if end_vertex is not already in MST:
+        # start at vertex 0 with 0 cost
 
-            if not in_mst[end_vertex]:
+        edge_costs.insert(0, (0, -1, 0))
 
-                # add it, and assign weights in mst
+        # convert edge costs list into a heap
 
-                in_mst[end_vertex] = True
-                self.mst[start_vertex, end_vertex] = weight
-                self.mst[end_vertex, start_vertex] = weight
-                num_edges += 1
+        heapq.heapify(edge_costs)
 
-                # add new edges to the priority queue
+        while edge_costs and len(edges_selected) < num_vertices - 1:
 
-                for next_vertex in range(num_vertices):
-                    if self.adj_mat[end_vertex, next_vertex] > 0 and not in_mst[next_vertex]:
-                        heapq.heappush(edges, (self.adj_mat[end_vertex, next_vertex], end_vertex, next_vertex))
+            # choose the edge with minimum weight
+
+            cost, from_vertex, to_vertex = heapq.heappop(edge_costs)
+
+            # if the vertex is already in mst, continue
+
+            if in_mst[to_vertex]:
+                continue
+
+            # add the vertex in mst
+
+            in_mst[to_vertex] = True
+
+            # add the edge to the list of chosen edges (if not starting vertex)
+
+            if from_vertex >= 0:
+                edges_selected.append((from_vertex, to_vertex))
+
+            # update the heap with the new edge costs to vertices not in MST
+                
+            for next_vertex, edge_weight in enumerate(self.adj_mat[to_vertex]):
+                if not in_mst[next_vertex] and edge_weight > 0:
+                    heapq.heappush(edge_costs, (edge_weight, to_vertex, next_vertex))
+
+        # build the mst from the chosen edges
+        for from_vertex, to_vertex in edges_selected:
+            weight = self.adj_mat[from_vertex][to_vertex]
+            self.mst[from_vertex][to_vertex] = weight
+            self.mst[to_vertex][from_vertex] = weight
+
 
         # handle disconnected graph case, where the number of vertices -1 is greater than the  number of edges
 
