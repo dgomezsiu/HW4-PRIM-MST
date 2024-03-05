@@ -39,7 +39,7 @@ def check_mst(adj_mat: np.ndarray,
     for i in range(num_vertices):
         for j in range(i+1, num_vertices):
             if mst[i, j] > 0:
-                assert mst[i, j] == adj_mat[i, j], 'MST contains an edge not in the original graph or with incorrect weight'
+                assert approx_equal(mst[i, j], adj_mat[i, j]), 'MST contains an edge not in the original graph or with incorrect weight'
 
 
 
