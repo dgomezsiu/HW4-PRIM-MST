@@ -96,9 +96,3 @@ class Graph:
             weight = self.adj_mat[from_vertex][to_vertex]
             self.mst[from_vertex][to_vertex] = weight
             self.mst[to_vertex][from_vertex] = weight
-
-
-        # handle disconnected graph case, where the number of vertices -1 is greater than the  number of edges
-
-        if len(num_edges) < num_vertices - 1:
-            raise Exception("input graph is disconnected")
