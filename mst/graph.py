@@ -41,4 +41,42 @@ class Graph:
         `heapify`, `heappop`, and `heappush` functions.
 
         """
-        self.mst = None
+
+        # initialize MST,number of vertices, and tracking array
+
+        num_vertices = self.adj_mat.shape[0]
+        self.mst = np.zeros_like(self.adj_mat)
+        in_mst = [False] * num_vertices
+
+        # initialize priority queue for edges (weight, vertex1, vertex2)
+
+        edges = [(0, 0, i) for i in range(1, num_vertices)]
+        heapq.heapify(edges)
+        num_edges = 0
+
+        # while not all vertices are included in the MST, work through the queue
+
+        while edges and num_edges < num_vertices - 1:
+            weight, start_vertex, end_vertex = heapq.heappop(edges)
+
+            # if end_vertex is not already in MST:
+
+            if not in_mst[end_vertex]:
+
+                # add it, and assign weights in mst
+
+                in_mst[end_vertex] = True
+                self.mst[start_vertex, end_vertex] = weight
+                self.mst[end_vertex, start_vertex] = weight
+                num_edges += 1
+
+                # add new edges to the priority queue
+
+                for next_vertex in range(num_vertices):
+                    if self.adj_mat[end_vertex, next_vertex] > 0 and not in_mst[next_vertex]:
+                        heapq.heappush(edges, (self.adj_mat[end_vertex, next_vertex], end_vertex, next_vertex))
+
+        # handle disconnected graph case, where the number of vertices -1 is greater than the  number of edges
+
+        if num_edges < num_vertices - 1:
+            raise Exception("input graph is disconnected")
