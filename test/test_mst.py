@@ -42,6 +42,13 @@ def check_mst(adj_mat: np.ndarray,
             if mst[i, j] > 0:
                 assert approx_equal(mst[i, j], adj_mat[i, j]), 'MST contains an edge not in the original graph or with incorrect weight'
 
+    # check weight, which should be half the sum of mst
+                
+    total = np.sum(mst) / 2
+    assert approx_equal(total, expected_weight), 'Proposed MST has incorrect expected weight'
+
+
+
 
     total = 0
     for i in range(mst.shape[0]):
