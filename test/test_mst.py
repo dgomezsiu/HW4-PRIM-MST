@@ -26,6 +26,14 @@ def check_mst(adj_mat: np.ndarray,
 
     """
 
+
+    # check the number of edges, which should be one less than the number of vvertices
+
+    num_vertices = mst.shape[0]
+    num_edges = np.count_nonzero(mst) // 2  # Each edge is counted twice
+    assert num_edges == num_vertices - 1, 'Proposed MST does not have the correct number of edges'
+
+
     # check that the mst path is in the adj matrix
 
     for i in range(num_vertices):
