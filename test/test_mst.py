@@ -26,6 +26,15 @@ def check_mst(adj_mat: np.ndarray,
 
     """
 
+    # check that the mst path is in the adj matrix
+
+    for i in range(num_vertices):
+        for j in range(i+1, num_vertices):
+            if mst[i, j] > 0:
+                assert mst[i, j] == adj_mat[i, j], 'MST contains an edge not in the original graph or with incorrect weight'
+
+
+
     def approx_equal(a, b):
         return abs(a - b) < allowed_error
 
