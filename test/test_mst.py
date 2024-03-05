@@ -82,14 +82,14 @@ def test_mst_student():
     TODO: Write at least one unit test for MST construction.
     
     """
-    # use a dfs to check that the MST construction connectivity
+    # use a dfs and check that the MST construction connectivity
+
     file_path = './data/small.csv'
     g = Graph(file_path)
     g.construct_mst()
     mst = g.mst
 
     num_vertices = mst.shape[0]
-
 
     def dfs(mst, vertex, visited):
         visited[vertex] = True
