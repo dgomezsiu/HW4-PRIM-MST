@@ -11,7 +11,7 @@ pythonpath = [
 ]
 
 [project]
-name = "hmm"
+name = "PRIM"
 authors = [{name = "David Gomez Siu", email = "david.gomezsiu@ucsf.edu"}]
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -22,4 +22,4 @@ dependencies = [
 ]
 
 [project.urls]
-Home = "https://github.com/dgomezsiu/HW6-HMM.git"
+Home = "https://github.com/dgomezsiu/HW4-PRIM-MST.git"

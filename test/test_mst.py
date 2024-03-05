@@ -87,9 +87,8 @@ def test_mst_student():
     file_path = './data/small.csv'
     g = Graph(file_path)
     g.construct_mst()
-    mst = g.mst
 
-    num_vertices = mst.shape[0]
+    num_vertices = g.mst.shape[0]
 
     def dfs(mst, vertex, visited):
         visited[vertex] = True
@@ -98,5 +97,13 @@ def test_mst_student():
                 dfs(mst, i, visited)
 
     visited = [False] * num_vertices
-    dfs(mst, 0, visited)
+    dfs(g.mst, 0, visited)
     assert all(visited), 'Proposed MST is not connected'
+
+    # check the symmetry of both the adj matrix and mst matrix
+
+    def check_symmetry(matrix):
+        return np.all(matrix == matrix.T)
+    
+    assert check_symmetry(g.adj_mat), 'The adjacency matrix of the full graph is not symmetric'
+    assert check_symmetry(g.mst), 'The adjacency matrix of the MST is not symmetric'
