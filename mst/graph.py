@@ -100,5 +100,5 @@ class Graph:
 
         # handle disconnected graph case, where the number of vertices -1 is greater than the  number of edges
 
-        if num_edges < num_vertices - 1:
+        if len(num_edges) < num_vertices - 1:
             raise Exception("input graph is disconnected")
